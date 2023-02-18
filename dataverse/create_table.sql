@@ -20,14 +20,14 @@ CREATE TABLE plots_year (
 
     PRIMARY KEY (plot_id, year),
     FOREIGN KEY (plot_id) REFERENCES plots(plot_id)
-)
+);
 
 CREATE TABLE species (
     species TEXT,
     func TEXT,
 
     PRIMARY KEY (species)
-)
+);
 
 CREATE TABLE plots_year_species(
     plot_id TEXT,
@@ -37,7 +37,7 @@ CREATE TABLE plots_year_species(
 
     PRIMARY KEY (plot_id, year, species),
     FOREIGN KEY (plot_id, year) REFERENCES plots_year(plot_id, year)
-)
+);
 
 CREATE TABLE plots_month_vwc_ssm (
     plot_id TEXT,
@@ -54,6 +54,5 @@ CREATE TABLE plots_month_vwc_ssm (
     PRIMARY KEY (plot_id, year, month),
     FOREIGN KEY (plot_id, year) REFERENCES plots(plot_id, year)
 
-)
+);
 
-CREATE TABLE 

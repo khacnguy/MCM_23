@@ -1,8 +1,22 @@
+DROP TABLE IF EXISTS plots;
+DROP TABLE IF EXISTS plots_year;
+DROP TABLE IF EXISTS species;
+DROP TABLE IF EXISTS plots_year_species;
+DROP TABLE IF EXISTS plots_month_vwc_ssm;
+
 CREATE TABLE plots (
     plot_id TEXT,
     site_located TEXT
     drought TEXT,
+    
     PRIMARY KEY (plot_id)
+);
+
+CREATE TABLE species (
+    species TEXT,
+    func TEXT,
+
+    PRIMARY KEY (species)
 );
 
 CREATE TABLE plots_year (
@@ -20,13 +34,6 @@ CREATE TABLE plots_year (
 
     PRIMARY KEY (plot_id, year),
     FOREIGN KEY (plot_id) REFERENCES plots(plot_id)
-);
-
-CREATE TABLE species (
-    species TEXT,
-    func TEXT,
-
-    PRIMARY KEY (species)
 );
 
 CREATE TABLE plots_year_species(

@@ -1,7 +1,0 @@
-Batbaatar_et_al_JEcol2021_RepData1.csv (text/csv) 14900 bytes.
-Batbaatar_et_al_JEcol2021_RepData2.csv (text/csv) 64169 bytes.
-Batbaatar_et_al_JEcol2021_RepData3.csv (text/csv) 1419355 bytes.
-Batbaatar_et_al_JEcol2021_RepData4.csv (text/csv) 10161 bytes.
-Batbaatar_et_al_JEcol2021_RepData5.csv (text/csv) 399574 bytes.
-Batbaatar_et_al_JEcol2021_RepData6.csv (text/csv) 22104 bytes.
-Batbaatar_et_al_JEcology2021_RepData_Readme.docx (application/vnd.openxmlformats-officedocument.wordprocessingml.document) 18481 bytes.

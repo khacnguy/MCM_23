@@ -1,5 +1,6 @@
 import sqlite3
-import matplotlib
+import matplotlib.pyplot as plt
+
 
 
 def create_connection(db_file):
@@ -22,7 +23,12 @@ def create_connection(db_file):
     return conn
 
 def main():
-    data = load_csv()
     global conn, cur
     conn = create_connection('dataverse/data.sql')
     cur = conn.cursor()
+
+    plt.plot([1,2,3,4])
+    plt.ylabel('some numbers')
+    plt.show()
+
+main()

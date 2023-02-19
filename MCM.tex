@@ -1,13 +1,55 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-
-\title{MCM}
-\date{February 2023}
+\documentclass[12pt]{article}
+\usepackage{blindtext}
+\usepackage{titlesec}
+\usepackage{biblatex}
+\addbibresource{MCM2023.bib}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
 
 \begin{document}
-
+\title{Title}
+\date{}
 \maketitle
+\thispagestyle{fancy}
+\fancyhead[L]{Problem Chosen\\A}
+\fancyhead[C]{2023\\MCM/ICM\\Summary Sheet}
+\fancyhead[R]{Team Control Number\\27352683}
+
+\text{Hi this is my summary sheet}
+\newpage
+
+\renewcommand{\contentsname}{Table of Contents}
+\tableofcontents
+\thispagestyle{empty}
+
+\newpage
+
 
 \section{Introduction}
 
+This is the first section.
+
+
+\blindtext
+
+\section{Assumptions}
+
+\blindtext
+
+\section{Model 1}
+
+\blindtext
+
+\section{Model 2}
+
+\blindtext
+
+\section{Discussion}
+
+\blindtext
+
+\section{References}
+\printbibliography[heading=none]
+
+\blindtext
 \end{document}

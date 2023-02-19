@@ -34,11 +34,6 @@ def check_unique_drought(data):
                 return 0
     return 1
 
-
-
-# change data1 to others data to check other data, has already checked data provided
-# print(check_unique_drought(data[1]))
-
 def create_connection(db_file):
     """ 
     Description: 
@@ -149,11 +144,17 @@ def insert_plots_year_species(data2):
         )
         conn.commit()
 
+def insert_plots_month_vwc_ssm(data3,data6):
+    pass
+
 def main():
     data = load_csv()
     global conn, cur
     conn = create_connection('dataverse/data.sql')
     cur = conn.cursor()
+
+    #confirm a plot has a specific drought condition
+    #print(check_unique_drought(data[1]))
 
     #insert plots
     #plot already inserted
@@ -174,6 +175,7 @@ def main():
     #insert plots_year_species
     #already inserted
     #insert_plots_year_species(data[2])
+
 
 main()
 

@@ -50,10 +50,9 @@ CREATE TABLE plots_year_species(
     ON DELETE CASCADE
 );
 
-CREATE TABLE plots_month_vwc_ssm (
+CREATE TABLE plots_month_vwc (
     plot_id TEXT,
     vwc REAL,
-    ssm REAL,
     year INTEGER,
     month INTEGER,
     ppt INTEGER,
@@ -65,6 +64,5 @@ CREATE TABLE plots_month_vwc_ssm (
     PRIMARY KEY (plot_id, year, month),
     FOREIGN KEY (plot_id, year) REFERENCES plots(plot_id, year)
     ON DELETE CASCADE
-
 );
 

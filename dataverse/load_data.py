@@ -5,7 +5,7 @@ import sqlite3
 def load_csv():
     data1 = pd.read_csv('dataverse/data/Batbaatar_et_al_JEcol2021_RepData1.csv')
     data2 = pd.read_csv('dataverse/data/Batbaatar_et_al_JEcol2021_RepData2.csv')
-    data3 = pd.read_csv('dataverse/data/Batbaatar_et_al_JEcol2021_RepData3.csv')
+    data3 = pd.read_csv('dataverse/data/data3_monthly.csv')
     data4 = pd.read_csv('dataverse/data/Batbaatar_et_al_JEcol2021_RepData4.csv')
     data5 = pd.read_csv('dataverse/data/Batbaatar_et_al_JEcol2021_RepData5.csv')
     data6 = pd.read_csv('dataverse/data/Batbaatar_et_al_JEcol2021_RepData6.csv')
@@ -53,6 +53,30 @@ def create_connection(db_file):
 
     return conn
 
+def site_unique(row):
+    cur.execute(
+            '''
+                SELECT * FROM sites WHERE site_id = ?
+            '''
+            , (row['site'],)
+        )
+    if cur.fetchone() != None:
+        return False
+    return True
+
+def insert_new_site(data):
+    for _, row in data.iterrows():
+        if site_unique(row):
+            cur.execute(
+                '''
+                INSERT INTO sites(site_id) 
+                VALUES (?) 
+                '''
+                , (row['site'],)
+            )
+            conn.commit()
+
+
 def plot_unique(row):
     cur.execute(
             '''
@@ -69,7 +93,7 @@ def insert_new_plot(data):
         if plot_unique(row):
             cur.execute(
                 '''
-                INSERT INTO plots(plot_id, site_located, drought) 
+                INSERT INTO plots(plot_id, site_id, drought) 
                 VALUES (?,?,?) 
                 '''
                 , (row['plot'], row['site'], row['drought'])
@@ -144,8 +168,29 @@ def insert_plots_year_species(data2):
         )
         conn.commit()
 
-def insert_plots_month_vwc_ssm(data3,data6):
-    pass
+def insert_plots_month_vwc(data3):
+    for _, row in data3.iterrows():
+        for month in [5,6,7,8,9]:
+            for year in [2017,2018,2019]:
+                cur.execute(
+                    '''
+                    INSERT INTO plots_month_vwc(plot_id, vwc, month, year) 
+                    VALUES (?,?,?,?) 
+                    '''
+                    , (row['Plot'], row[str(month) + '-' + str(year)], month, year)
+                )
+                conn.commit()
+
+def insert_sites_month(data6):
+    for _, row in data6.iterrows():
+        cur.execute(
+            '''
+            INSERT INTO sites_month(site_id, year, month, ppt, rs_ppt, Tave, Tmax, Tmin) 
+            VALUES (?,?,?,?,?,?,?,?) 
+            '''
+            , (row[['site', 'year', 'month', 'ppt', 'rs.ppt', 'Tave', 'Tmax', 'Tmin']])
+        )
+        conn.commit()
 
 def main():
     data = load_csv()
@@ -156,26 +201,30 @@ def main():
     #confirm a plot has a specific drought condition
     #print(check_unique_drought(data[1]))
 
-    #insert plots
-    #plot already inserted
-    #insert_new_plot(data[1][['plot', 'site', 'drought']])
+    #sites already inserted
+    insert_new_site(data[1])
 
-    #insert species
+    #plot already inserted
+    insert_new_plot(data[1][['plot', 'site', 'drought']])
+
     #species already inserted
-    #insert_new_species(data[2][['species', 'func']])
+    insert_new_species(data[2][['species', 'func']])
 
     #check in a naive way if there is missing data between two files
     #already checked
     #print(find_bad_plot(data[1], data[4]))
 
-    #insert plots_year
     #already inserted
-    #insert_plots_year(data[1],data[4])
+    insert_plots_year(data[1],data[4])
 
-    #insert plots_year_species
     #already inserted
-    #insert_plots_year_species(data[2])
+    insert_plots_year_species(data[2])
 
+    #already inserted
+    insert_plots_month_vwc(data[3])
+
+    #already inserted
+    insert_sites_month(data[6])
 
 main()
 

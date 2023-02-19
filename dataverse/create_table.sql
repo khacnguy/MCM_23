@@ -1,15 +1,15 @@
-DROP TABLE IF EXISTS plots;
-DROP TABLE IF EXISTS plots_year;
-DROP TABLE IF EXISTS species;
-DROP TABLE IF EXISTS plots_year_species;
-DROP TABLE IF EXISTS plots_month_vwc_ssm;
+CREATE TABLE sites(
+    site_id TEXT,
+    PRIMARY KEY (site_id)
+);
 
 CREATE TABLE plots (
     plot_id TEXT,
-    site_located TEXT,
+    site_id TEXT,
     drought TEXT,
 
-    PRIMARY KEY (plot_id)
+    PRIMARY KEY (plot_id),
+    FOREIGN KEY (site_id) REFERENCES sites (site_id)
 );
 
 CREATE TABLE species (
@@ -45,7 +45,7 @@ CREATE TABLE plots_year_species(
 
     PRIMARY KEY (plot_id, year, species_id),
     FOREIGN KEY (plot_id, year) REFERENCES plots_year(plot_id, year)
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
     FOREIGN KEY (species_id) REFERENCES species(species_id)
     ON DELETE CASCADE
 );
@@ -53,16 +53,26 @@ CREATE TABLE plots_year_species(
 CREATE TABLE plots_month_vwc (
     plot_id TEXT,
     vwc REAL,
-    year INTEGER,
     month INTEGER,
+    year INTEGER,
+
+    PRIMARY KEY (plot_id, month, year),
+    FOREIGN KEY (plot_id) REFERENCES plots (plot_id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE sites_month (
+    site_id TEXT,
+    year INTEGER,
+    month INTEGER, 
     ppt INTEGER,
     Tmax REAL,
     Tmin REAL,
     Tave REAL,
     rs_ppt REAL,
 
-    PRIMARY KEY (plot_id, year, month),
-    FOREIGN KEY (plot_id, year) REFERENCES plots(plot_id, year)
+    PRIMARY KEY (site_id, year, month),
+    FOREIGN KEY (site_id) REFERENCES sites(site_id)
     ON DELETE CASCADE
 );
 
